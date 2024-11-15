@@ -1,0 +1,32 @@
+name: ORBIT PIPELINE
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+        - name: Checkout code from the Repository
+          uses: actions/checkout@v4
+        - name: Setup NodeJs
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+        - name: Run Cypress Automation Tests
+          uses: cypress-io/github-action@v6
+          with:
+            working-directory: ./rudimentary1.0/
+            browser: chrome
+            install: true
+            command: npm run cy:run
